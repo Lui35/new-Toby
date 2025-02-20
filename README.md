@@ -1,3 +1,16 @@
+#All this proejct is AI Generated 
+# Project Title: new Toby
+
+This project includes JavaScript assets that provide utilities, theming, tab management, storage, and search functionalities. It is designed to offer a modular structure for building interactive web applications.
+
+## Key Modules
+- utils.js: Utility functions
+- themes.js: Theme management
+- theme-init.js: Theme initialization
+- tabs.js: Managing tab interactions
+- storage.js: Storage handling
+- double-shift-search.js: Enhanced search functionality
+
 # New Toby - Chrome Extension
 
 A Chrome extension for efficient tab management, inspired by Toby. This extension allows you to organize your tabs into collections with a clean and modern interface.
