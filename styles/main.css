@@ -290,7 +290,7 @@ html, body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     min-width: 140px;
     display: none;
-    z-index: 1000;
+    z-index: 100022222;
     overflow: hidden;
     padding: 4px;
 }
@@ -416,6 +416,7 @@ html, body {
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    border-radius: 4px;
 }
 
 .dropdown-item:hover {
@@ -451,53 +452,56 @@ html, body {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 12px;
+    padding: 16px;
     margin-bottom: 8px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .web-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .web-card.selected-for-move {
     border: 2px solid var(--accent-color);
-    box-shadow: 0 0 0 2px var(--accent-color-transparent);
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    flex: 1;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
 }
 
 .card-favicon {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
 }
 
 .card-title {
     font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
     color: var(--text-color);
-    margin-right: 8px;
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .card-url {
-    color: var(--text-color-secondary);
-    font-size: 0.9em;
+    color: var(--accent-color);
+    font-size: 12px;
+    padding-left: 32px;
+    opacity: 0.8;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -509,16 +513,19 @@ html, body {
     right: 8px;
     opacity: 0;
     transition: opacity 0.2s ease;
+    display: flex;
+    gap: 4px;
 }
 
 .web-card:hover .card-menu-container {
     opacity: 1;
 }
 
-.menu-btn {
+.menu-btn,
+.move-btn {
     background: none;
     border: none;
-    padding: 4px;
+    padding: 6px;
     cursor: pointer;
     border-radius: 4px;
     display: flex;
@@ -528,22 +535,40 @@ html, body {
     transition: all 0.2s ease;
 }
 
-.menu-btn:hover {
-    background: var(--hover-bg);
-    color: var(--text-color);
+.menu-btn:hover,
+.move-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--dropdown-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 4px;
-    display: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+.selected-for-move .move-btn {
+    color: var(--accent-color);
+    background: rgba(33, 150, 243, 0.1);
+}
+
+.move-btn {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+  .move-btn {
+    position: fixed;
+    bottom: 20px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .dropdown-menu.show {
@@ -562,32 +587,27 @@ html, body {
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s ease;
-    font-size: 0.9em;
+    font-size: 13px;
 }
 
 .dropdown-item:hover {
-    background: var(--hover-bg);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-item svg {
     color: var(--text-color-secondary);
 }
 
+.edit-btn {
+  position: relative;
+}
+
 .move-btn {
-    position: absolute;
-    top: 8px;
-    right: 36px;
-    background: none;
-    border: none;
-    padding: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-color-secondary);
-    transition: all 0.2s ease;
-    opacity: 0;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 1000;
+  display: none;
 }
 
 .web-card:hover .move-btn {
@@ -915,12 +935,7 @@ html, body {
     box-shadow: 0 0 0 2px var(--accent-color-transparent);
 }
 
-.card-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-}
+
 
 .favicon {
     width: 16px;

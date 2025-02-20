@@ -57,6 +57,8 @@ class CollectionsManager {
         editBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit';
         editBtn.onclick = (e) => {
             e.stopPropagation();
+            const moveBtn = cardElement.querySelector('.move-btn');
+            moveBtn.style.display = moveBtn.style.display === 'none' ? 'flex' : 'none';
             this.showEditCollectionModal(collection);
         };
         
@@ -117,16 +119,22 @@ class CollectionsManager {
         const cardTitle = utils.createElementWithClass('div', 'card-title');
         cardTitle.textContent = card.title;
         
+        cardHeader.appendChild(favicon);
+        cardHeader.appendChild(cardTitle);
+        
         const cardUrl = utils.createElementWithClass('div', 'card-url');
         cardUrl.textContent = new URL(card.url).hostname;
         
-        // Create menu button and dropdown
+        cardContent.appendChild(cardHeader);
+        cardContent.appendChild(cardUrl);
+        
+        // Create menu container with move and menu buttons
         const menuContainer = utils.createElementWithClass('div', 'card-menu-container');
         
         // Move button
         const moveBtn = utils.createElementWithClass('button', 'move-btn');
         moveBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 9l7-7 7 7"/>
                 <path d="M5 15l7 7 7-7"/>
             </svg>
@@ -137,9 +145,10 @@ class CollectionsManager {
             cardReorderer.selectCard(cardElement, cardsContainer);
         };
         
+        // Menu button
         const menuBtn = utils.createElementWithClass('button', 'menu-btn');
         menuBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="1"></circle>
                 <circle cx="12" cy="5" r="1"></circle>
                 <circle cx="12" cy="19" r="1"></circle>
@@ -157,6 +166,8 @@ class CollectionsManager {
         editBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>Edit';
         editBtn.onclick = (e) => {
             e.stopPropagation();
+            const moveBtn = cardElement.querySelector('.move-btn');
+            moveBtn.style.display = moveBtn.style.display === 'none' ? 'flex' : 'none';
             this.showEditModal(card, collectionId);
         };
         
@@ -175,16 +186,11 @@ class CollectionsManager {
         
         dropdown.appendChild(editBtn);
         dropdown.appendChild(deleteBtn);
+        menuContainer.appendChild(moveBtn);
         menuContainer.appendChild(menuBtn);
         menuContainer.appendChild(dropdown);
         
-        cardHeader.appendChild(favicon);
-        cardHeader.appendChild(cardTitle);
-        cardContent.appendChild(cardHeader);
-        cardContent.appendChild(cardUrl);
         cardElement.appendChild(cardContent);
-        
-        cardElement.appendChild(moveBtn);
         cardElement.appendChild(menuContainer);
         
         cardElement.onclick = () => {
