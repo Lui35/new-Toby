@@ -40,5 +40,73 @@ const utils = {
             const data = JSON.parse(e.dataTransfer.getData('text/plain'));
             onDrop(data);
         });
+    },
+
+    showAlert: (options) => {
+        const { title, message, type = 'confirm', onConfirm, onCancel } = options;
+        
+        const alert = document.createElement('div');
+        alert.className = 'custom-alert';
+        
+        const alertContent = document.createElement('div');
+        alertContent.className = 'alert-content';
+        
+        const alertHeader = document.createElement('div');
+        alertHeader.className = 'alert-header';
+        
+        const alertTitle = document.createElement('h3');
+        alertTitle.className = 'alert-title';
+        alertTitle.textContent = title;
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'alert-close';
+        closeBtn.innerHTML = '×';
+        closeBtn.onclick = () => {
+            alert.classList.add('closing');
+            setTimeout(() => document.body.removeChild(alert), 300);
+            if (onCancel) onCancel();
+        };
+        
+        alertHeader.appendChild(alertTitle);
+        alertHeader.appendChild(closeBtn);
+        
+        const alertMessage = document.createElement('div');
+        alertMessage.className = 'alert-message';
+        alertMessage.textContent = message;
+        
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'alert-buttons';
+        
+        if (type === 'confirm') {
+            const cancelBtn = document.createElement('button');
+            cancelBtn.textContent = 'Cancel';
+            cancelBtn.className = 'btn-secondary';
+            cancelBtn.onclick = () => {
+                alert.classList.add('closing');
+                setTimeout(() => document.body.removeChild(alert), 300);
+                if (onCancel) onCancel();
+            };
+            buttonContainer.appendChild(cancelBtn);
+        }
+        
+        const confirmBtn = document.createElement('button');
+        confirmBtn.textContent = type === 'confirm' ? 'Confirm' : 'OK';
+        confirmBtn.className = 'btn-primary';
+        confirmBtn.onclick = () => {
+            alert.classList.add('closing');
+            setTimeout(() => document.body.removeChild(alert), 300);
+            if (onConfirm) onConfirm();
+        };
+        buttonContainer.appendChild(confirmBtn);
+        
+        alertContent.appendChild(alertHeader);
+        alertContent.appendChild(alertMessage);
+        alertContent.appendChild(buttonContainer);
+        alert.appendChild(alertContent);
+        
+        document.body.appendChild(alert);
+        setTimeout(() => alert.classList.add('show'), 50);
+        
+        confirmBtn.focus();
     }
 };
