@@ -204,6 +204,9 @@ class DoubleShiftSearch {
     
     displayResults() {
         this.resultsContainer.innerHTML = '';
+        if(this.currentResults.length > 0 && this.selectedIndex < 0) {
+            this.selectedIndex = 0;
+        }
         
         if (this.currentResults.length === 0) {
             const noResults = document.createElement('div');
