@@ -5,6 +5,11 @@
     --border-color: #e0e0e0;
     --accent-color: #2196f3;
     --hover-color: #e8f0fe;
+    --card-bg: #ffffff;
+    --dropdown-bg: #ffffff;
+    --text-color-secondary: #666666;
+    --hover-bg: #f7f7f7;
+    --accent-color-transparent: rgba(33, 150, 243, 0.1);
 }
 
 * {
@@ -442,113 +447,103 @@ html, body {
 }
 
 .web-card {
-    background-color: var(--primary-bg);
+    position: relative;
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 16px;
+    padding: 12px;
+    margin-bottom: 8px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
+    transition: all 0.2s ease;
 }
 
 .web-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.web-card.selected-for-move {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-transparent);
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 
 .card-favicon {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
 .card-title {
     font-weight: 500;
-    font-size: 14px;
-    line-height: 1.4;
     color: var(--text-color);
-    flex: 1;
+    margin-right: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .card-url {
-    color: var(--accent-color);
-    font-size: 12px;
-    padding-left: 32px;
-    opacity: 0.8;
-}
-
-.delete-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: #ff4444;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.web-card:hover .delete-btn {
-    opacity: 1;
-}
-
-.delete-btn:hover {
-    background-color: rgba(255, 68, 68, 0.1);
+    color: var(--text-color-secondary);
+    font-size: 0.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .card-menu-container {
     position: absolute;
     top: 8px;
     right: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.web-card:hover .card-menu-container {
+    opacity: 1;
 }
 
 .menu-btn {
     background: none;
     border: none;
-    color: var(--text-color);
-    font-size: 18px;
+    padding: 4px;
     cursor: pointer;
-    padding: 4px 8px;
     border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.web-card:hover .menu-btn {
-    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-secondary);
+    transition: all 0.2s ease;
 }
 
 .menu-btn:hover {
-    background-color: var(--hover-color);
+    background: var(--hover-bg);
+    color: var(--text-color);
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    background: var(--primary-bg);
+    background: var(--dropdown-bg);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    padding: 4px;
     display: none;
-    z-index: 1000;
-    min-width: 120px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 
 .dropdown-menu.show {
@@ -556,19 +551,58 @@ html, body {
 }
 
 .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
     border: none;
     background: none;
-    text-align: left;
-    cursor: pointer;
+    width: 100%;
     color: var(--text-color);
-    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
 }
 
 .dropdown-item:hover {
-    background-color: var(--hover-color);
+    background: var(--hover-bg);
+}
+
+.dropdown-item svg {
+    color: var(--text-color-secondary);
+}
+
+.move-btn {
+    position: absolute;
+    top: 8px;
+    right: 36px;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-secondary);
+    transition: all 0.2s ease;
+    opacity: 0;
+}
+
+.web-card:hover .move-btn {
+    opacity: 1;
+}
+
+.move-btn:hover {
+    background: var(--hover-bg);
+    color: var(--text-color);
+}
+
+.selected-for-move .move-btn {
+    color: var(--accent-color);
+    background: var(--accent-color-transparent);
+    opacity: 1;
 }
 
 .btn-primary {
@@ -855,4 +889,88 @@ html, body {
 
 .tabs-list{
     margin: 1rem;
+}
+
+.card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card.selected-for-move {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-transparent);
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.favicon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.card-title {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-right: 8px;
+}
+
+.card-url {
+    color: var(--text-color-secondary);
+    font-size: 0.9em;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.card:hover .card-buttons {
+    opacity: 1;
+}
+
+.move-btn,
+.delete-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color-secondary);
+    transition: all 0.2s ease;
+}
+
+.move-btn:hover,
+.delete-btn:hover {
+    background: var(--hover-bg);
+    color: var(--text-color);
+}
+
+.selected-for-move .move-btn {
+    color: var(--accent-color);
+    background: var(--accent-color-transparent);
 }

@@ -54,5 +54,19 @@ const storage = {
             collection.cards = collection.cards.filter(c => c.id !== cardId);
             await this.saveCollections(collections);
         }
+    },
+
+    async reorderCards(collectionId, cardIds) {
+        const collections = await this.getCollections();
+        const collection = collections.find(c => c.id === collectionId);
+        if (collection) {
+            // Create a new array with the cards in the specified order
+            const reorderedCards = cardIds.map(cardId => 
+                collection.cards.find(card => card.id === cardId)
+            ).filter(Boolean);
+            
+            collection.cards = reorderedCards;
+            await this.saveCollections(collections);
+        }
     }
 };

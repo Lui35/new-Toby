@@ -104,9 +104,9 @@ class CollectionsManager {
 
     createCardElement(card, collectionId) {
         const cardElement = utils.createElementWithClass('div', 'web-card');
+        cardElement.dataset.cardId = card.id;
         
         const cardContent = utils.createElementWithClass('div', 'card-content');
-        cardContent.onclick = () => window.open(card.url, '_blank');
         
         const cardHeader = utils.createElementWithClass('div', 'card-header');
         
@@ -122,8 +122,29 @@ class CollectionsManager {
         
         // Create menu button and dropdown
         const menuContainer = utils.createElementWithClass('div', 'card-menu-container');
+        
+        // Move button
+        const moveBtn = utils.createElementWithClass('button', 'move-btn');
+        moveBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 9l7-7 7 7"/>
+                <path d="M5 15l7 7 7-7"/>
+            </svg>
+        `;
+        moveBtn.onclick = (e) => {
+            e.stopPropagation();
+            const cardsContainer = cardElement.closest('.cards-container');
+            cardReorderer.selectCard(cardElement, cardsContainer);
+        };
+        
         const menuBtn = utils.createElementWithClass('button', 'menu-btn');
-        menuBtn.innerHTML = '⋮';
+        menuBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+            </svg>
+        `;
         menuBtn.onclick = (e) => {
             e.stopPropagation();
             dropdown.classList.toggle('show');
@@ -162,7 +183,13 @@ class CollectionsManager {
         cardContent.appendChild(cardHeader);
         cardContent.appendChild(cardUrl);
         cardElement.appendChild(cardContent);
+        
+        cardElement.appendChild(moveBtn);
         cardElement.appendChild(menuContainer);
+        
+        cardElement.onclick = () => {
+            chrome.tabs.create({ url: card.url });
+        };
         
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
