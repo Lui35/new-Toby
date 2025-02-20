@@ -22,6 +22,10 @@ class ThemeManager {
 
     applyTheme(theme) {
         document.body.setAttribute('data-theme', theme);
-        this.themeSwitch.textContent = `Switch to ${theme === 'light' ? 'Dark' : 'Light'} Theme`;
+        const icon = theme === 'light' ? '☀️' : '🌙';
+        const nextTheme = theme === 'light' ? 'dark' : 'light';
+        // Display only the emoji without additional text
+        this.themeSwitch.innerHTML = `${icon}`;
+        this.themeSwitch.setAttribute('aria-label', `Switch to ${nextTheme} theme`);
     }
 }
