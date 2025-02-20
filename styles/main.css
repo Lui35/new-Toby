@@ -99,12 +99,20 @@ html, body {
     margin-bottom: 24px;
 }
 
+.collections-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0;
+    width: 100%;
+}
+
 .collection-card {
     background-color: var(--primary-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 24px;
+    width: 100%;
     transition: box-shadow 0.3s ease;
 }
 
@@ -112,42 +120,12 @@ html, body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.web-card {
-    background-color: var(--secondary-bg);
-    border-radius: 6px;
-    padding: 16px;
-    margin: 12px 0;
-    cursor: move;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.web-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s ease;
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-color);
-    opacity: 0.9;
-}
-
-.dragging {
-    opacity: 0.5;
-}
-
-.drag-over {
-    border: 2px dashed var(--accent-color);
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
 }
 
 .collection-header {
@@ -155,6 +133,8 @@ html, body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .collection-title {
@@ -197,6 +177,36 @@ html, body {
     text-overflow: ellipsis;
 }
 
+.web-card {
+    background-color: var(--secondary-bg);
+    border-radius: 6px;
+    padding: 16px;
+    cursor: move;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.web-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.card-url {
+    color: var(--accent-color);
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
     width: 8px;
@@ -213,4 +223,28 @@ html, body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #999;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color);
+    opacity: 0.9;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.drag-over {
+    border: 2px dashed var(--accent-color);
 }
