@@ -90,6 +90,9 @@ class TabsManager {
         closeBtn.onclick = async (e) => {
             e.stopPropagation();
             try {
+                tabElement.classList.add('closing');
+                // Wait for animation to complete before removing
+                await new Promise(resolve => setTimeout(resolve, 200));
                 await chrome.tabs.remove(tab.id);
                 tabElement.remove();
             } catch (error) {
@@ -100,12 +103,24 @@ class TabsManager {
         tabElement.appendChild(favicon);
         tabElement.appendChild(title);
         tabElement.appendChild(closeBtn);
-        
-        tabElement.onclick = () => {
-            chrome.tabs.update(tab.id, { active: true });
-            chrome.windows.update(tab.windowId, { focused: true });
+
+        // Add active class if this is the active tab
+        if (tab.active) {
+            tabElement.classList.add('active');
+        }
+
+        // Add click handler to switch to tab
+        tabElement.onclick = async () => {
+            try {
+                await chrome.tabs.update(tab.id, { active: true });
+                // Update active states
+                this.tabsList.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                tabElement.classList.add('active');
+            } catch (error) {
+                console.error('Error switching to tab:', error);
+            }
         };
-        
+
         utils.addDragListeners(tabElement, {
             type: 'tab',
             id: tab.id,

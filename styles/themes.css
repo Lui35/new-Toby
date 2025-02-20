@@ -17,6 +17,9 @@ html {
     --border-color: #e0e0e0;
     --accent-color: #2196f3;
     --hover-color: #e8f0fe;
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+    --card-shadow: rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] {
@@ -26,6 +29,9 @@ html {
     --border-color: #404040;
     --accent-color: #64b5f6;
     --hover-color: #383838;
+    --card-bg: #2d2d2d;
+    --card-border: #404040;
+    --card-shadow: rgba(0, 0, 0, 0.3);
 }
 
 /* Make theme visible once loaded */
