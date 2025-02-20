@@ -44,6 +44,11 @@ html, body {
     overflow-y: auto;
 }
 
+.sidebar{
+    background-color: rgb(255, 255, 251);
+    max-width: 300px;
+}
+
 .tabs-header {
     padding: 16px;
     border-bottom: 1px solid var(--border-color);
@@ -1019,4 +1024,59 @@ html, body {
 
 #open-tabs-list::-webkit-scrollbar-thumb:hover {
     background: var(--text-color-secondary);
+}
+
+.theme-toggle {
+    position: relative;
+}
+
+.theme-switch {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.theme-switch:hover {
+    background-color: var(--hover-color);
+    transform: scale(1.1);
+}
+
+.theme-switch:active {
+    transform: scale(0.9);
+}
+
+.theme-switch .sun-icon,
+.theme-switch .moon-icon {
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .theme-switch .moon-icon {
+    opacity: 0;
+    transform: translateY(20%) rotate(-45deg);
+}
+
+[data-theme="light"] .theme-switch .sun-icon {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+}
+
+[data-theme="dark"] .theme-switch .sun-icon {
+    opacity: 0;
+    transform: translateY(20%) rotate(45deg);
+}
+
+[data-theme="dark"] .theme-switch .moon-icon {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
 }
