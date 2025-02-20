@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Toby</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/themes.css">
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>Open Tabs</h2>
+            </div>
+            <div id="open-tabs-list" class="tabs-list"></div>
+        </div>
+
+        <div id="main-content" class="main-content">
+            <div class="header">
+                <h1>New Toby</h1>
+                <div class="theme-toggle">
+                    <button id="theme-switch">Toggle Theme</button>
+                </div>
+            </div>
+            
+            <div class="collections-container">
+                <div class="collections-header">
+                    <h2>Collections</h2>
+                    <button id="add-collection" class="btn-primary">New Collection</button>
+                </div>
+                <div id="collections-list" class="collections-list"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/themes.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/collections.js"></script>
+    <script src="js/tabs.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[data-theme="light"] {
+    --primary-bg: #ffffff;
+    --secondary-bg: #f5f5f5;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --accent-color: #2196f3;
+    --hover-color: #e8f0fe;
+}
+
+[data-theme="dark"] {
+    --primary-bg: #1e1e1e;
+    --secondary-bg: #2d2d2d;
+    --text-color: #ffffff;
+    --border-color: #404040;
+    --accent-color: #64b5f6;
+    --hover-color: #383838;
+}
+
+/* Smooth theme transition */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.collection-card,
+.web-card {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
