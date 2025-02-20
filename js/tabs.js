@@ -62,8 +62,19 @@ class TabsManager {
         tabElement.draggable = true;
         
         const favicon = utils.createElementWithClass('img', 'tab-favicon');
-        favicon.src = tab.favIconUrl || 'icons/default-favicon.png';
-        favicon.onerror = () => favicon.src = 'icons/default-favicon.png';
+        // Default favicon as a data URL - a simple gray globe icon
+        const defaultFavicon = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAABF0lEQVQ4jZ2TsUrDUBSGv5OkIVRBqC4FoS4WBB0cHBx8Bx19Ax/A0UfwCRx9A0dHBycHQXBxKLgWQSgFoY1Jbm5yzr2OTW5jm1r/5Qzn/B/nnP8IpRRlUUqhlEIphRACIQQA0vO8JQCllF7kBUopjDH/AqSU+L6PlJL1LxBCEMcxQRAQxzGO4xDHMUKIxQiaphkNwxCllJ6maRiGwfd9sizDGEOe5wRBgG3bBEGA4ziEYUie58RxTJ7nM0CWZViWhed5GGNwXZc0TYmiiCzLsG0bKSVpmqK1xnEcgiDAGDMHUEqRJAlaa6IoQkqJUorpdIrWmizLEEKgtcbzPLTWJEmC1noGmM1Fa00YhgDkeY5lWZRFKcXPWXwD3Ho2svOxc1IAAAAASUVORK5CYII=';
+        
+        // Check if this is a special Chrome URL (newtab, extensions, etc)
+        const isSpecialChromeUrl = tab.url.startsWith('chrome://') || tab.url === 'chrome://newtab/' || tab.url === 'chrome://newtab';
+        
+        // For special Chrome URLs, use default favicon immediately
+        if (isSpecialChromeUrl) {
+            favicon.src = defaultFavicon;
+        } else {
+            favicon.src = tab.favIconUrl || defaultFavicon;
+            favicon.onerror = () => favicon.src = defaultFavicon;
+        }
         
         const title = utils.createElementWithClass('div', 'tab-title');
         title.textContent = tab.title;

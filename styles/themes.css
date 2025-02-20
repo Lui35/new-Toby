@@ -1,3 +1,15 @@
+/* Prevent any flash before theme is loaded */
+html:not(.theme-loaded) {
+    visibility: hidden;
+}
+
+/* Set initial values to prevent flash */
+html {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 [data-theme="light"] {
     --primary-bg: #ffffff;
     --secondary-bg: #f5f5f5;
@@ -16,12 +28,25 @@
     --hover-color: #383838;
 }
 
-/* Smooth theme transition */
-body {
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* Make theme visible once loaded */
+html.theme-loaded {
+    visibility: visible;
 }
 
+/* Apply theme colors immediately */
+html[data-theme] {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+}
+
+/* Components that need theme transitions */
 .collection-card,
-.web-card {
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+.web-card,
+.sidebar,
+.main-content,
+button,
+input {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease,
+                border-color 0.3s ease;
 }

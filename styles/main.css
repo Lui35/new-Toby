@@ -852,3 +852,7 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
     background: #999;
 }
+
+.tabs-list{
+    margin: 1rem;
+}
