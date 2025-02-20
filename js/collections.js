@@ -63,19 +63,40 @@ class CollectionsManager {
     createCardElement(card, collectionId) {
         const cardElement = utils.createElementWithClass('div', 'web-card');
         
+        const cardContent = utils.createElementWithClass('div', 'card-content');
+        cardContent.onclick = () => window.open(card.url, '_blank');
+        
+        const cardHeader = utils.createElementWithClass('div', 'card-header');
+        
+        const favicon = utils.createElementWithClass('img', 'card-favicon');
+        favicon.src = `https://www.google.com/s2/favicons?domain=${new URL(card.url).hostname}&sz=32`;
+        favicon.onerror = () => favicon.src = 'icons/default-favicon.png';
+        
         const cardTitle = utils.createElementWithClass('div', 'card-title');
         cardTitle.textContent = card.title;
         
         const cardUrl = utils.createElementWithClass('div', 'card-url');
-        cardUrl.textContent = card.url;
+        cardUrl.textContent = new URL(card.url).hostname;
         
         const deleteBtn = utils.createElementWithClass('button', 'delete-btn');
         deleteBtn.textContent = '×';
-        deleteBtn.onclick = () => this.deleteCard(collectionId, card.id);
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation();
+            this.deleteCard(collectionId, card.id);
+        };
         
-        cardElement.appendChild(cardTitle);
-        cardElement.appendChild(cardUrl);
+        cardHeader.appendChild(favicon);
+        cardHeader.appendChild(cardTitle);
+        cardContent.appendChild(cardHeader);
+        cardContent.appendChild(cardUrl);
+        cardElement.appendChild(cardContent);
         cardElement.appendChild(deleteBtn);
+        
+        utils.addDragListeners(cardElement, {
+            type: 'card',
+            id: card.id,
+            collectionId: collectionId
+        });
         
         return cardElement;
     }
